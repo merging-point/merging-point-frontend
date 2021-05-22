@@ -56,7 +56,6 @@ const Register = () => {
                 {...register('name', { required: true })}
               />
               <TextArea
-                type="number"
                 placeholder="전화번호를 입력해주세요."
                 {...register('phone_number', { required: true })}
               />
@@ -184,6 +183,7 @@ const TextArea = styled.input`
   outline: none;
   border: none;
   margin: 0 0 40px 0;
+  appearance: none;
   -webkit-appearance: none;
   box-shadow: inset 0 0 0 2px #afafaf;
   -webkit-box-shadow: inset 0 0 0 2px #afafaf;

@@ -24,7 +24,7 @@ export default () => {
             <TextArea placeholder="전화번호를 입력해주세요." />
             <TextArea placeholder="사진 파일을 첨부해주세요." />
           </TextAreaContainer>
-          <ReportBtn type="button" value="신고 완료하기"></ReportBtn>
+          <ReportBtn type="button">신고 완료하기</ReportBtn>
         </ReportForm>
       </SidebarContainer>
       {!isMobile && <BackgroundContainer />}
@@ -108,7 +108,10 @@ const TextArea = styled.input`
   outline: none;
   border: none;
   margin: 0 0 40px 0;
+  appearance: none;
+  -webkit-appearance: none;
   box-shadow: inset 0 0 0 2px #afafaf;
+  -webkit-box-shadow: inset 0 0 0 2px #afafaf;
   padding: 0 0 0 32px;
 
   &:focus {
@@ -123,7 +126,7 @@ const TextArea = styled.input`
     padding: 0 0 0 17px;
   }
 `;
-const ReportBtn = styled.input`
+const ReportBtn = styled.button`
   width: 100%;
   height: 69px;
   border-radius: 8px;
