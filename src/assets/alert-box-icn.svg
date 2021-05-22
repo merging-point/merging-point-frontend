@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 3</title>
+    <g id="UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="[1-WEB]-Welcome" transform="translate(-136.000000, -608.000000)">
+            <g id="Group-6" transform="translate(128.000000, 599.000000)">
+                <g id="Group-3" transform="translate(8.000000, 9.000000)">
+                    <circle id="Oval" fill="#FEEAEB" cx="14" cy="14" r="14"></circle>
+                    <path d="M14.8,14.8 L13.2,14.8 L13.2,10 L14.8,10 M14.8,18 L13.2,18 L13.2,16.4 L14.8,16.4 M14,6 C9.584,6 6,9.584 6,14 C6,18.416 9.584,22 14,22 C18.416,22 22,18.416 22,14 C22,9.584 18.416,6 14,6 Z" id="Shape" fill="#EB4840" fill-rule="nonzero"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
