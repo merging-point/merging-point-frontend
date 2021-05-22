@@ -1,10 +1,27 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import { useHistory } from 'react-router';
+import { useForm } from 'react-hook-form';
+
+import api from '../utils/api';
 import Logo from '../components/Logo';
 
 const Root: React.FC = () => {
   const history = useHistory();
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = async (data: any) => {
+    try {
+      const res = await api.post('/token', data);
+      localStorage.setItem('token', JSON.stringify(res.data));
+      if (res.status === 200) {
+        document.location.replace('/main');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <Container>
       <SidebarContainer>
@@ -24,14 +41,20 @@ const Root: React.FC = () => {
               방금까지 5명이나 25초 만에 가입을 했어요!
             </AlertBoxContents>
           </AlertBox>
-          <SnsLoginButton
-            src={require('../assets/sns-apple-button.svg')}
-            onClick={() => history.push('/main')}
-          />
-          <SnsLoginButton
-            src={require('../assets/sns-google-button.svg')}
-            onClick={() => history.push('/main')}
-          />
+          <form onSubmit={handleSubmit(onSubmit)} encType="application/json">
+            <TextAreaContainer>
+              <TextArea
+                placeholder="아이디를 입력해주세요."
+                {...register('username', { required: true })}
+              />
+              <TextArea
+                type="password"
+                placeholder="비밀번호를 입력해주세요."
+                {...register('password', { required: true })}
+              />
+            </TextAreaContainer>
+            <ReportBtn type="submit" value="신고 완료하기" />
+          </form>
         </SidebarMiddleSection>
         <PoweredByWrap>
           <PoweredByText>POWERED BY</PoweredByText>
@@ -114,11 +137,57 @@ const AlertBoxContents = styled.span`
   color: #fd146a;
 `;
 
-const SnsLoginButton = styled.img`
+const TextAreaContainer = styled.div`
+  margin: 0 0 32px 0;
+  @media only screen and (max-width: 768px) {
+    margin: 0 0 104px 0;
+  }
+`;
+
+const TextArea = styled.input`
   width: 100%;
   max-width: 376px;
   cursor: pointer;
+  height: 55px;
+  border-radius: 8px;
+  font-size: 18px;
+  outline: none;
+  border: none;
   margin-top: 16px;
+  box-shadow: inset 0 0 0 2px #afafaf;
+  padding: 0 0 0 32px;
+
+  &:focus {
+    box-shadow: inset 0 0 0 2px #fd146a;
+  }
+
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+    height: 45px;
+    font-size: 14px;
+    margin: 0 0 24px 0;
+    padding: 0 0 0 17px;
+  }
+`;
+const ReportBtn = styled.input`
+  width: 100%;
+  height: 55px;
+  max-width: 376px;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  font-size: 21px;
+  font-weight: bold;
+  letter-spacing: -0.8px;
+  outline: none;
+  color: #ffffff;
+  background-color: #000000;
+  margin-top: 16px;
+
+  @media only screen and (max-width: 768px) {
+    height: 45px;
+    font-size: 16px;
+  }
 `;
 
 const PoweredByWrap = styled.div`
