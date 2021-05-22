@@ -6,6 +6,6 @@ import App from './client/App';
 import './styles/reset.css';
 import './styles/index.css';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('app'));
 
 serviceWorker.unregister();
