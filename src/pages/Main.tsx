@@ -1,41 +1,63 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useState } from 'react';
+import KakaoMap from '../components/KakaoMap';
+import KakaoMapMarker from '../components/KakaoMapMarker';
+import KakaoMapSearch from '../components/KakaoMapSearch';
 import Logo from '../components/Logo';
+import markers from '../constance/markers';
 
-export default () => (
-  <Container>
-    <SidebarContainer>
-      <Logo style={{ marginBottom: 28 }} />
-      <LocationWrap>
-        <AddressWrap>
-          <Address>서울시 용산구 청파동</Address>
-          <AvailableCount>
-            <b>총 주차 가능 공간</b> 130개
-          </AvailableCount>
-        </AddressWrap>
-        <GeolocationIcon src={require('../assets/geolocation-icn.svg')} />
-      </LocationWrap>
-      <SearchInputContainer>
-        <SearchInputIcon src={require('../assets/search-icn.svg')} />
-        <SearchInput placeholder="위치를 입력해주세요." />
-      </SearchInputContainer>
-      <Divider />
-      <SectionContainer>
-        <SectionTitleWrap>
-          <SectionTitleText>가장 가까운 곳</SectionTitleText>
-          <SectionSubTitleText>(GPS 기준)</SectionSubTitleText>
-        </SectionTitleWrap>
-        <Address>청파동3가 청파로 45번길</Address>
-        <DistanceText>현재 위치에서 2분 안에 도착!</DistanceText>
+export default () => {
+  const [keyword, setKeyword] = useState<string>('');
+  const [searchKeyword, setSearchKeyword] = useState<string>('');
+  return (
+    <Container>
+      <SidebarContainer>
+        <Logo style={{ marginBottom: 28 }} />
+        <LocationWrap>
+          <AddressWrap>
+            <Address>서울시 용산구 청파동</Address>
+            <AvailableCount>
+              <b>총 주차 가능 공간</b> 130개
+            </AvailableCount>
+          </AddressWrap>
+          <GeolocationIcon src={require('../assets/geolocation-icn.svg')} />
+        </LocationWrap>
+        <SearchInputContainer>
+          <SearchInputIcon src={require('../assets/search-icn.svg')} />
+          <SearchInput
+            placeholder="위치를 입력해주세요."
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && setSearchKeyword(keyword)}
+          />
+        </SearchInputContainer>
         <Divider />
+        <SectionContainer>
+          <SectionTitleWrap>
+            <SectionTitleText>가장 가까운 곳</SectionTitleText>
+            <SectionSubTitleText>(GPS 기준)</SectionSubTitleText>
+          </SectionTitleWrap>
+          <Address>청파동3가 청파로 45번길</Address>
+          <DistanceText>현재 위치에서 2분 안에 도착!</DistanceText>
+          <Divider />
 
-        <Address>청파동3가 청파로 45번길</Address>
-        <DistanceText> 장애인 주차 공간 평균 대비 4% ↑</DistanceText>
-      </SectionContainer>
-    </SidebarContainer>
-    <MapContainer />
-  </Container>
-);
+          <Address>청파동3가 청파로 45번길</Address>
+          <DistanceText> 장애인 주차 공간 평균 대비 4% ↑</DistanceText>
+        </SectionContainer>
+      </SidebarContainer>
+      <MapContainer>
+        <KakaoMap lat={33.450701} lng={126.570667} height="100vh" level={3}>
+          <KakaoMapMarker
+            lat={33.450701}
+            lng={126.570667}
+            image={markers[99]}
+          />
+          <KakaoMapSearch keyword={searchKeyword} />
+        </KakaoMap>
+      </MapContainer>
+    </Container>
+  );
+};
 
 const Container = styled.div`
   display: flex;
