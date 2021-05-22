@@ -1,3 +1,4 @@
+// @ts-ignore
 import { useContext, useEffect } from 'react';
 import { MapContext } from './KakaoMap';
 

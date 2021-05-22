@@ -1,13 +1,11 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { useHistory } from 'react-router';
 import { useForm } from 'react-hook-form';
 
 import api from '../utils/api';
 import Logo from '../components/Logo';
 
 const Root: React.FC = () => {
-  const history = useHistory();
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data: any) => {

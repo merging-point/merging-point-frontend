@@ -30,8 +30,6 @@ const Register = () => {
     }
   };
 
-  const handleOption = (e: any) => {};
-
   useEffect(() => setIsMobile(navigator.userAgent.indexOf('Mobi') > -1), []);
   return (
     <Container>

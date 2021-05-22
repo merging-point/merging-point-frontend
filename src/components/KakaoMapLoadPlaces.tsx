@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import markers from '../constance/markers';
 import api from '../utils/api';
