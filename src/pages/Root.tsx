@@ -1,11 +1,12 @@
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
-import React from 'react';
 import { useForm } from 'react-hook-form';
 
 import api from '../utils/api';
 import Logo from '../components/Logo';
 
 const Root: React.FC = () => {
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data: any) => {
@@ -20,10 +21,13 @@ const Root: React.FC = () => {
     }
   };
 
+  useEffect(() => setIsMobile(navigator.userAgent.indexOf('Mobi') > -1), []);
   return (
     <Container>
       <SidebarContainer>
-        <Logo />
+        <LogoWrapper>
+          <Logo />
+        </LogoWrapper>
         <SidebarMiddleSection>
           <SidebarTitle>
             안녕하세요! <br />
@@ -51,7 +55,7 @@ const Root: React.FC = () => {
                 {...register('password', { required: true })}
               />
             </TextAreaContainer>
-            <ReportBtn type="submit" value="접속하기" />
+            <ReportBtn type="submit">접속하기</ReportBtn>
           </form>
         </SidebarMiddleSection>
         <SpaceBetween>
@@ -65,7 +69,7 @@ const Root: React.FC = () => {
           <PoweredByLogo src={require('../assets/autocrypt-logo.svg')} />
         </PoweredByWrap>
       </SidebarContainer>
-      <BackgroundContainer />
+      {!isMobile && <BackgroundContainer />}
     </Container>
   );
 };
@@ -76,12 +80,18 @@ const Container = styled.div`
   display: flex;
   height: 100vh;
 `;
-
+const LogoWrapper = styled.div`
+  margin: 24px 0 48px 0;
+`;
 const SpaceBetween = styled.div`
   display: flex;
   justify-content: space-between;
 
   max-width: 376px;
+
+  @media only screen and (max-width: 768px) {
+    margin: 0 0 40px 0;
+  }
 `;
 
 const SubTitle = styled.span`
@@ -107,6 +117,12 @@ const SidebarContainer = styled.div`
   background-color: white;
 
   padding: 128px;
+
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+    padding: 0 20px;
+    justify-content: center;
+  }
 `;
 
 const BackgroundContainer = styled.div`
@@ -136,6 +152,10 @@ const SidebarTitle = styled.span`
   & > b {
     font-weight: bold;
   }
+  @media only screen and (max-width: 768px) {
+    font-size: 24px;
+    font-weight: bold;
+  }
 `;
 
 const AlertBox = styled.div`
@@ -147,6 +167,10 @@ const AlertBox = styled.div`
   padding: 9px 8px;
   border-radius: 8px;
   background-color: #f8f8f8;
+  @media only screen and (max-width: 768px) {
+    height: 45px;
+    margin: 0 0 16px 0;
+  }
 `;
 
 const AlertBoxIcon = styled.img`
@@ -165,7 +189,7 @@ const AlertBoxContents = styled.span`
 const TextAreaContainer = styled.div`
   margin: 0 0 32px 0;
   @media only screen and (max-width: 768px) {
-    margin: 0 0 104px 0;
+    margin: 0;
   }
 `;
 
@@ -180,6 +204,8 @@ const TextArea = styled.input`
   border: none;
   margin-top: 16px;
   box-shadow: inset 0 0 0 2px #afafaf;
+  -webkit-appearance: none;
+  -webkit-box-shadow: inset 0 0 0 2px #afafaf;
   padding: 0 0 0 32px;
 
   &:focus {
@@ -194,7 +220,7 @@ const TextArea = styled.input`
     padding: 0 0 0 17px;
   }
 `;
-const ReportBtn = styled.input`
+const ReportBtn = styled.button`
   width: 100%;
   height: 55px;
   max-width: 376px;
@@ -206,18 +232,24 @@ const ReportBtn = styled.input`
   letter-spacing: -0.8px;
   outline: none;
   color: #ffffff;
+  text-align: center;
   background-color: #000000;
   margin-top: 16px;
 
   @media only screen and (max-width: 768px) {
     height: 45px;
     font-size: 16px;
+    margin: 0 0 16px 0;
   }
 `;
 
 const PoweredByWrap = styled.div`
   display: flex;
   flex-direction: column;
+  @media only screen and (max-width: 768px) {
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 const PoweredByText = styled.span`
@@ -226,8 +258,16 @@ const PoweredByText = styled.span`
   letter-spacing: -0.6px;
   color: #212121;
   margin-bottom: 16px;
+  @media only screen and (max-width: 768px) {
+    font-size: 14px;
+    font-weight: 500;
+  }
 `;
 
 const PoweredByLogo = styled.img`
   width: 197px;
+  @media only screen and (max-width: 768px) {
+    width: 111px;
+    margin: 17px 0 0;
+  }
 `;

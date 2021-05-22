@@ -180,7 +180,9 @@ const TextArea = styled.input`
   outline: none;
   border: none;
   margin: 0 0 40px 0;
+  -webkit-appearance: none;
   box-shadow: inset 0 0 0 2px #afafaf;
+  -webkit-box-shadow: inset 0 0 0 2px #afafaf;
   padding: 0 32px;
 
   &:focus {
