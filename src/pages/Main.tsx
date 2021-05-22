@@ -1,14 +1,18 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import KakaoMap from '../components/KakaoMap';
-import KakaoMapMarker from '../components/KakaoMapMarker';
+import KakaoMapLoadPlaces from '../components/KakaoMapLoadPlaces';
 import KakaoMapSearch from '../components/KakaoMapSearch';
 import Logo from '../components/Logo';
-import markers from '../constance/markers';
 
 export default () => {
   const [keyword, setKeyword] = useState<string>('');
   const [searchKeyword, setSearchKeyword] = useState<string>('');
+
+  const [focusPlace, setFocusPlace] = useState<any>(null);
+
+  const [placeCount, setPlaceCount] = useState<number>(0);
+
   return (
     <Container>
       <SidebarContainer>
@@ -17,7 +21,7 @@ export default () => {
           <AddressWrap>
             <Address>서울시 용산구 청파동</Address>
             <AvailableCount>
-              <b>총 주차 가능 공간</b> 130개
+              <b>총 주차 가능 공간</b> {placeCount}개
             </AvailableCount>
           </AddressWrap>
           <GeolocationIcon src={require('../assets/geolocation-icn.svg')} />
@@ -43,16 +47,16 @@ export default () => {
 
           <Address>청파동3가 청파로 45번길</Address>
           <DistanceText> 장애인 주차 공간 평균 대비 4% ↑</DistanceText>
+          {JSON.stringify(focusPlace)}
         </SectionContainer>
       </SidebarContainer>
       <MapContainer>
-        <KakaoMap lat={33.450701} lng={126.570667} height="100vh" level={3}>
-          <KakaoMapMarker
-            lat={33.450701}
-            lng={126.570667}
-            image={markers[99]}
-          />
+        <KakaoMap lat={37.555078} lng={126.970702} height="100vh" level={10}>
           <KakaoMapSearch keyword={searchKeyword} />
+          <KakaoMapLoadPlaces
+            setFocusPlace={setFocusPlace}
+            setPlaceCount={setPlaceCount}
+          />
         </KakaoMap>
       </MapContainer>
     </Container>
@@ -98,7 +102,7 @@ const AddressWrap = styled.div`
 
 const Address = styled.span`
   display: block;
-  font-size: 24px;
+  font-size: 16px;
   font-weight: bold;
   color: #212121;
   margin-bottom: 8px;
