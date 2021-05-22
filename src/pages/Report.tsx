@@ -1,7 +1,10 @@
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
-import React from 'react';
 
-const Root: React.FC = () => {
+export default () => {
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => setIsMobile(navigator.userAgent.indexOf('Mobi') > -1), []);
   return (
     <Container>
       <SidebarContainer>
@@ -13,19 +16,17 @@ const Root: React.FC = () => {
             사진을 첨부해주세요.
           </Title>
           <TextAreaContainer>
-            <TextArea placeholder="이름을 입력해주세요."></TextArea>
-            <TextArea placeholder="전화번호를 입력해주세요."></TextArea>
-            <TextArea placeholder="사진 파일을 입력해주세요."></TextArea>
+            <TextArea placeholder="이름을 입력해주세요." />
+            <TextArea placeholder="전화번호를 입력해주세요." />
+            <TextArea placeholder="사진 파일을 첨부해주세요." />
           </TextAreaContainer>
           <ReportBtn type="button" value="신고 완료하기"></ReportBtn>
         </ReportForm>
       </SidebarContainer>
-      <BackgroundContainer />
+      {!isMobile && <BackgroundContainer />}
     </Container>
   );
 };
-
-export default Root;
 
 const Container = styled.div`
   display: flex;
@@ -41,6 +42,11 @@ const SidebarContainer = styled.div`
   background-color: white;
 
   padding: 128px;
+
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+    padding: 0 20px;
+  }
 `;
 
 const BackgroundContainer = styled.div`
@@ -53,13 +59,18 @@ const BackgroundContainer = styled.div`
 
 const SubTitle = styled.span`
   width: 268px;
-  height: 52px;
   font-family: NotoSansKR;
   font-size: 36px;
   font-weight: 500;
   letter-spacing: -1.3px;
   color: #212121;
   margin: 0 0 40px 0;
+
+  @media only screen and (max-width: 768px) {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 0 24px 0;
+  }
 `;
 
 const ReportForm = styled.div`
@@ -72,9 +83,18 @@ const Title = styled.p`
   letter-spacing: -1.8px;
   color: #212121;
   margin: 0 0 48px 0;
+
+  @media only screen and (max-width: 768px) {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 0 21px 0;
+  }
 `;
 const TextAreaContainer = styled.div`
   margin: 0 0 32px 0;
+  @media only screen and (max-width: 768px) {
+    margin: 0 0 104px 0;
+  }
 `;
 const TextArea = styled.input`
   width: calc(100% - 36px);
@@ -86,8 +106,17 @@ const TextArea = styled.input`
   margin: 0 0 40px 0;
   box-shadow: inset 0 0 0 2px #afafaf;
   padding: 0 0 0 32px;
+
   &:focus {
     box-shadow: inset 0 0 0 2px #fd146a;
+  }
+
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+    height: 45px;
+    font-size: 14px;
+    margin: 0 0 24px 0;
+    padding: 0 0 0 17px;
   }
 `;
 const ReportBtn = styled.input`
@@ -100,4 +129,9 @@ const ReportBtn = styled.input`
   outline: none;
   color: #ffffff;
   background-color: #000000;
+
+  @media only screen and (max-width: 768px) {
+    height: 45px;
+    font-size: 16px;
+  }
 `;
