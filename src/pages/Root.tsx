@@ -1,11 +1,14 @@
 import styled from '@emotion/styled';
 import React from 'react';
+import { useHistory } from 'react-router';
+import Logo from '../components/Logo';
 
 const Root: React.FC = () => {
+  const history = useHistory();
   return (
     <Container>
       <SidebarContainer>
-        <Logo src={require('../assets/logo.svg')} />
+        <Logo />
         <SidebarMiddleSection>
           <SidebarTitle>
             안녕하세요! <br />
@@ -21,8 +24,14 @@ const Root: React.FC = () => {
               방금까지 5명이나 25초 만에 가입을 했어요!
             </AlertBoxContents>
           </AlertBox>
-          <SnsLoginButton src={require('../assets/sns-apple-button.svg')} />
-          <SnsLoginButton src={require('../assets/sns-google-button.svg')} />
+          <SnsLoginButton
+            src={require('../assets/sns-apple-button.svg')}
+            onClick={() => history.push('/main')}
+          />
+          <SnsLoginButton
+            src={require('../assets/sns-google-button.svg')}
+            onClick={() => history.push('/main')}
+          />
         </SidebarMiddleSection>
         <PoweredByWrap>
           <PoweredByText>POWERED BY</PoweredByText>
@@ -58,10 +67,6 @@ const BackgroundContainer = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-`;
-
-const Logo = styled.img`
-  width: 200px;
 `;
 
 const SidebarMiddleSection = styled.div`
