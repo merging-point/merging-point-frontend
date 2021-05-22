@@ -10,7 +10,6 @@ const Register = () => {
   const { register, handleSubmit } = useForm();
 
   const disabledPerson = [
-    { id: 0, value: '장애등급을 선택해주세요.', selected: true },
     { id: 1, value: '1급' },
     { id: 2, value: '2급' },
     { id: 3, value: '3급' },
@@ -58,14 +57,17 @@ const Register = () => {
                 {...register('phone_number', { required: true })}
               />
               <Select {...register('disability_grade', { required: true })}>
-                {disabledPerson.map((item) => (
-                  <Option value={item.id} selected={item.selected}>
+                <Option value="default" disabled>
+                  장애등급을 선택해주세요.
+                </Option>
+                {disabledPerson.map((item, idx) => (
+                  <Option key={idx} value={item.id}>
                     {item.value}
                   </Option>
                 ))}
               </Select>
             </TextAreaContainer>
-            <ReportBtn type="submit" value="신고 완료하기" />
+            <ReportBtn type="submit" value="가입하기" />
           </form>
         </ReportForm>
       </SidebarContainer>
@@ -82,7 +84,7 @@ const Container = styled.div`
 `;
 
 const Select = styled.select`
-  width: calc(100% - 36px);
+  width: 100%;
   height: 69px;
   border-radius: 8px;
   font-size: 18px;
@@ -91,7 +93,7 @@ const Select = styled.select`
   margin: 0 0 40px 0;
   box-shadow: inset 0 0 0 2px #afafaf;
   background: none;
-  padding: 0 0 0 32px;
+  padding: 0 32px;
 
   appearance: none;
   --webkit-appearance: none;
@@ -132,10 +134,10 @@ const BackgroundContainer = styled.div`
 `;
 
 const SubTitle = styled.span`
-  width: 268px;
-  font-family: NotoSansKR;
+  width: 100%;
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 36px;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: -1.3px;
   color: #212121;
   margin: 0 0 40px 0;
@@ -171,7 +173,7 @@ const TextAreaContainer = styled.div`
   }
 `;
 const TextArea = styled.input`
-  width: calc(100% - 36px);
+  width: 100%;
   height: 69px;
   border-radius: 8px;
   font-size: 18px;
@@ -179,7 +181,7 @@ const TextArea = styled.input`
   border: none;
   margin: 0 0 40px 0;
   box-shadow: inset 0 0 0 2px #afafaf;
-  padding: 0 0 0 32px;
+  padding: 0 32px;
 
   &:focus {
     box-shadow: inset 0 0 0 2px #fd146a;
