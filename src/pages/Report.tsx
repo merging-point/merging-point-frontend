@@ -2,9 +2,13 @@ import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 
 export default () => {
-  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 760);
 
-  useEffect(() => setIsMobile(navigator.userAgent.indexOf('Mobi') > -1), []);
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setIsMobile(window.innerWidth <= 760);
+    });
+  }, []);
   return (
     <Container>
       <SidebarContainer>

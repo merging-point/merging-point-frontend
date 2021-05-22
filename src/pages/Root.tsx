@@ -6,7 +6,7 @@ import api from '../utils/api';
 import Logo from '../components/Logo';
 
 const Root: React.FC = () => {
-  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 760);
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data: any) => {
@@ -21,7 +21,11 @@ const Root: React.FC = () => {
     }
   };
 
-  useEffect(() => setIsMobile(navigator.userAgent.indexOf('Mobi') > -1), []);
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setIsMobile(window.innerWidth <= 760);
+    });
+  }, []);
   return (
     <Container>
       <SidebarContainer>
