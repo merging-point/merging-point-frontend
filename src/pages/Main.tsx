@@ -8,6 +8,7 @@ import Logo from '../components/Logo';
 export default () => {
   const [keyword, setKeyword] = useState<string>('');
   const [searchKeyword, setSearchKeyword] = useState<string>('');
+  const [address, setAddress] = useState<string>('');
 
   const [focusPlace, setFocusPlace] = useState<any>(null);
 
@@ -19,7 +20,7 @@ export default () => {
         <Logo style={{ marginBottom: 28 }} />
         <LocationWrap>
           <AddressWrap>
-            <Address>서울시 용산구 청파동</Address>
+            <Address>{address}</Address>
             <AvailableCount>
               <b>총 주차 가능 공간</b> {placeCount}개
             </AvailableCount>
@@ -56,6 +57,7 @@ export default () => {
           <KakaoMapLoadPlaces
             setFocusPlace={setFocusPlace}
             setPlaceCount={setPlaceCount}
+            setAddress={setAddress}
           />
         </KakaoMap>
       </MapContainer>

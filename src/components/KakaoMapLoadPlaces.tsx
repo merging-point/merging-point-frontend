@@ -15,14 +15,18 @@ interface IBound {
   swlng: number;
   nelat: number;
   nelng: number;
+  ctlat: number;
+  ctlng: number;
 }
 
 const KakaoMapLoadPlaces = ({
   setFocusPlace,
   setPlaceCount,
+  setAddress,
 }: {
   setFocusPlace: any;
   setPlaceCount: any;
+  setAddress: any;
 }) => {
   const map: any = useContext(MapContext);
   const [bounds, setBounds] = useState<IBound>({
@@ -30,6 +34,8 @@ const KakaoMapLoadPlaces = ({
     swlng: 0,
     nelat: 0,
     nelng: 0,
+    ctlat: 0,
+    ctlng: 0,
   });
   const [placeData, setPlaceData] = useState([]);
 
@@ -42,7 +48,30 @@ const KakaoMapLoadPlaces = ({
       nelat: neLatLng.getLat(),
       swlng: swLatLng.getLng(),
       nelng: neLatLng.getLng(),
+      ctlat: map.getCenter().getLat(),
+      ctlng: map.getCenter().getLng(),
     });
+
+    const geocoder = new kakao.maps.services.Geocoder();
+
+    // 좌표로 행정동 주소 정보를 요청합니다
+    geocoder.coord2RegionCode(
+      map.getCenter().getLng(),
+      map.getCenter().getLat(),
+      (result: any, status: any) => {
+        if (status === kakao.maps.services.Status.OK) {
+          var infoDiv = document.getElementById('centerAddr');
+
+          for (var i = 0; i < result.length; i++) {
+            // 행정동의 region_type 값은 'H' 이므로
+            if (result[i].region_type === 'H') {
+              setAddress(result[i].address_name);
+              break;
+            }
+          }
+        }
+      },
+    );
   }, [map]);
 
   useEffect(() => {
@@ -55,6 +84,7 @@ const KakaoMapLoadPlaces = ({
 
   useEffect(() => {
     (async () => {
+      console.log(bounds);
       const { data } = await api.get('/parkinglot/closest', {
         params: {
           south_west_latitude: bounds.swlat,
