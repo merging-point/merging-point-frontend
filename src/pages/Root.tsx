@@ -53,9 +53,15 @@ const Root: React.FC = () => {
                 {...register('password', { required: true })}
               />
             </TextAreaContainer>
-            <ReportBtn type="submit" value="신고 완료하기" />
+            <ReportBtn type="submit" value="접속하기" />
           </form>
         </SidebarMiddleSection>
+        <SpaceBetween>
+          <SubTitle>가입되신 계정이 없으신가요?</SubTitle>
+          <ClickTitle onClick={() => document.location.replace('/register')}>
+            회원가입
+          </ClickTitle>
+        </SpaceBetween>
         <PoweredByWrap>
           <PoweredByText>POWERED BY</PoweredByText>
           <PoweredByLogo src={require('../assets/autocrypt-logo.svg')} />
@@ -71,6 +77,27 @@ export default Root;
 const Container = styled.div`
   display: flex;
   height: 100vh;
+`;
+
+const SpaceBetween = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  max-width: 376px;
+`;
+
+const SubTitle = styled.span`
+  font-size: 16px;
+  font-weight: 500;
+  color: #9a9a9a9a;
+`;
+
+const ClickTitle = styled.span`
+  font-size: 16px;
+  font-weight: 500;
+  color: #9a9a9a9a;
+
+  cursor: pointer;
 `;
 
 const SidebarContainer = styled.div`
