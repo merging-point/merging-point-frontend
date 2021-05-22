@@ -55,7 +55,7 @@ const KakaoMapLoadPlaces = ({
 
   useEffect(() => {
     (async () => {
-      const { data } = await api.get('/parkinglot/get_closest', {
+      const { data } = await api.get('/parkinglot/closest', {
         params: {
           south_west_latitude: bounds.swlat,
           south_west_longtitude: bounds.swlng,
