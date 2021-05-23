@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { MapContext } from './KakaoMap';
 // import { MapContext } from './KakaoMap';
 import Marker from './KakaoMapMarker';
 
@@ -10,10 +11,10 @@ const gpsMarker = new kakao.maps.MarkerImage(
   { offset: new kakao.maps.Point(15, 15) },
 );
 
-const KakaoMapWebview = () => {
+const KakaoMapWebview = ({ center, setCenter }: any) => {
   const [location, setLocation] = useState({ lat: 0, lng: 0 });
   // const [initialized, setInitialized] = useState(false);
-  // const map: any = useContext(MapContext);
+  const map: any = useContext(MapContext);
 
   const handleEvent = useCallback(
     (event: { data: string }) => {
@@ -39,6 +40,17 @@ const KakaoMapWebview = () => {
     },
     [location],
   );
+
+  useEffect(() => {
+    if (center) {
+      if (location.lat !== 0 && location.lng !== 0) {
+        map.setCenter(new kakao.maps.LatLng(location.lat, location.lng));
+        setCenter(false);
+      } else {
+        window.alert('위치 정보가 조회되지 않았습니다.');
+      }
+    }
+  }, [center]);
 
   useEffect(() => {
     document.addEventListener(

@@ -55,6 +55,8 @@ export default () => {
   const [placeCount, setPlaceCount] = useState<number>(0);
   const [placeData, setPlaceData] = useState([]);
 
+  const [center, setCenter] = useState(false);
+
   useEffect(() => {
     window.addEventListener('resize', () => {
       setIsMobile(window.innerWidth <= 760);
@@ -92,6 +94,7 @@ export default () => {
                     </AddressWrap>
                     <GeolocationIcon
                       src={require('../assets/geolocation-icn.svg')}
+                      onClick={() => setCenter(true)}
                     />
                   </LocationWrap>
                   <SearchInputContainer>
@@ -140,7 +143,10 @@ export default () => {
                 <b>총 주차 가능 공간</b> {placeCount}개
               </AvailableCount>
             </AddressWrap>
-            <GeolocationIcon src={require('../assets/geolocation-icn.svg')} />
+            <GeolocationIcon
+              src={require('../assets/geolocation-icn.svg')}
+              onClick={() => setCenter(true)}
+            />
           </LocationWrap>
           <SearchInputContainer>
             <SearchInputIcon src={require('../assets/search-icn.svg')} />
@@ -180,7 +186,7 @@ export default () => {
             setAddress={setAddress}
             setPlaceData={setPlaceData}
           />
-          <KakaoMapWebview />
+          <KakaoMapWebview center={center} setCenter={setCenter} />
         </KakaoMap>
       </MapContainer>
     </Container>
