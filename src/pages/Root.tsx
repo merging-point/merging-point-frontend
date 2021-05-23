@@ -59,7 +59,7 @@ const Root: React.FC = () => {
                 {...register('password', { required: true })}
               />
             </TextAreaContainer>
-            <ReportBtn type="submit">접속하기</ReportBtn>
+            <ReportBtn type="submit">로그인하기</ReportBtn>
           </form>
         </SidebarMiddleSection>
         <SpaceBetween>
