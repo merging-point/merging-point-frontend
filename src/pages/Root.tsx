@@ -25,6 +25,9 @@ const Root: React.FC = () => {
     window.addEventListener('resize', () => {
       setIsMobile(window.innerWidth <= 760);
     });
+    if (localStorage.getItem('token') !== null) {
+      document.location.replace('/main');
+    }
   }, []);
   return (
     <Container>
