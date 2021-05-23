@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 
 const { kakao } = window;
-
+console.log(kakao);
 export default new Array(100)
   .fill(null)
   .map(
