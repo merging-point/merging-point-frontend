@@ -20,13 +20,18 @@ const KakaoMapWebview = () => {
       const data = JSON.parse(event.data);
       switch (data.type) {
         case 'geolocation':
-          if (data.data.lat !== 0 && data.data.lng !== 0) {
-            if (!initialized) {
-              map.setCenter(
-                new kakao.maps.LatLng(data.data.lat, data.data.lng),
-              );
-              setInitialized(true);
-            }
+          if (
+            data.data.lat !== 0 &&
+            data.data.lng !== 0 &&
+            data.data.lat !== location.lat &&
+            data.data.lng !== location.lng
+          ) {
+            // if (!initialized) {
+            //   map.setCenter(
+            //     new kakao.maps.LatLng(data.data.lat, data.data.lng),
+            //   );
+            //   setInitialized(true);
+            // }
             setLocation({ lat: data.data.lat, lng: data.data.lng });
           }
           break;
