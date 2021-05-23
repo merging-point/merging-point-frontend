@@ -92,6 +92,8 @@ const KakaoMapLoadPlaces = ({
           south_west_longtitude: bounds.swlng,
           north_east_latitude: bounds.nelat,
           north_east_longtitude: bounds.nelng,
+          center_latitude: bounds.ctlat,
+          center_longtitude: bounds.ctlng,
         },
       });
       setPlaceCount(data.length);
