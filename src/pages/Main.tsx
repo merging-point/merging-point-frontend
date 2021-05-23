@@ -22,6 +22,12 @@ export default () => {
     window.addEventListener('resize', () => {
       setIsMobile(window.innerWidth <= 760);
     });
+
+    return () => {
+      window.removeEventListener('resize', () => {
+        setIsMobile(window.innerWidth <= 760);
+      });
+    };
   }, []);
 
   return (
