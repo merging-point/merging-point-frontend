@@ -50,6 +50,7 @@ const KakaoMapWebview = ({ center, setCenter }: any) => {
         window.alert('위치 정보가 조회되지 않았습니다.');
       }
     }
+    // eslint-disable-next-line
   }, [center]);
 
   useEffect(() => {
