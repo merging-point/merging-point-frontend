@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import api from '../utils/api';
 
 const Register = () => {
-  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 760);
 
   const { register, handleSubmit } = useForm();
 
@@ -29,7 +29,11 @@ const Register = () => {
     }
   };
 
-  useEffect(() => setIsMobile(navigator.userAgent.indexOf('Mobi') > -1), []);
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setIsMobile(window.innerWidth <= 760);
+    });
+  }, []);
   return (
     <Container>
       <SidebarContainer>
@@ -52,7 +56,6 @@ const Register = () => {
                 {...register('name', { required: true })}
               />
               <TextArea
-                type="number"
                 placeholder="전화번호를 입력해주세요."
                 {...register('phone_number', { required: true })}
               />
@@ -67,7 +70,7 @@ const Register = () => {
                 ))}
               </Select>
             </TextAreaContainer>
-            <ReportBtn type="submit" value="가입하기" />
+            <ReportBtn type="submit">가입하기</ReportBtn>
           </form>
         </ReportForm>
       </SidebarContainer>
@@ -180,6 +183,7 @@ const TextArea = styled.input`
   outline: none;
   border: none;
   margin: 0 0 40px 0;
+  appearance: none;
   -webkit-appearance: none;
   box-shadow: inset 0 0 0 2px #afafaf;
   -webkit-box-shadow: inset 0 0 0 2px #afafaf;
@@ -197,7 +201,7 @@ const TextArea = styled.input`
     padding: 0 0 0 17px;
   }
 `;
-const ReportBtn = styled.input`
+const ReportBtn = styled.button`
   width: 100%;
   height: 69px;
   border: none;
