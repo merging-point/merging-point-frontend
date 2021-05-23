@@ -32,7 +32,7 @@ const KakaoMapWebview = () => {
           break;
       }
     },
-    [map],
+    [map, initialized],
   );
 
   useEffect(() => {
