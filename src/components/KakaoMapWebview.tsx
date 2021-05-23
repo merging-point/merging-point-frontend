@@ -1,5 +1,5 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { MapContext } from './KakaoMap';
+import React, { useCallback, useEffect, useState } from 'react';
+// import { MapContext } from './KakaoMap';
 import Marker from './KakaoMapMarker';
 
 const { kakao } = window;
@@ -12,8 +12,8 @@ const gpsMarker = new kakao.maps.MarkerImage(
 
 const KakaoMapWebview = () => {
   const [location, setLocation] = useState({ lat: 0, lng: 0 });
-  const [initialized, setInitialized] = useState(false);
-  const map: any = useContext(MapContext);
+  // const [initialized, setInitialized] = useState(false);
+  // const map: any = useContext(MapContext);
 
   const handleEvent = useCallback(
     (event: { data: string }) => {
@@ -37,7 +37,7 @@ const KakaoMapWebview = () => {
           break;
       }
     },
-    [map, initialized],
+    [location],
   );
 
   useEffect(() => {
