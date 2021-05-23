@@ -171,7 +171,7 @@ export default () => {
         </SidebarContainer>
       )}
       <MapContainer>
-        <KakaoMap lat={37.555078} lng={126.970702} height="100vh" level={10}>
+        <KakaoMap lat={37.555078} lng={126.970702} height="100vh" level={6}>
           <KakaoMapSearch keyword={searchKeyword} />
           <KakaoMapLoadPlaces
             placeData={placeData}
