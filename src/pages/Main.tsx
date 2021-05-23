@@ -5,7 +5,42 @@ import Sheet from 'react-modal-sheet';
 import KakaoMap from '../components/KakaoMap';
 import KakaoMapLoadPlaces from '../components/KakaoMapLoadPlaces';
 import KakaoMapSearch from '../components/KakaoMapSearch';
+import KakaoMapWebview from '../components/KakaoMapWebview';
 import Logo from '../components/Logo';
+
+const parkingLotInfo = (focusPlace: any) => {
+  if (focusPlace) {
+    return (
+      <>
+        <Address>{focusPlace?.number_address}</Address>
+        <DistanceText>
+          {focusPlace?.estimated_time &&
+          focusPlace?.avg_bigger_percentage < 0 ? (
+            <>
+              현재 위치에서 {Math.floor(focusPlace?.estimated_time / 1000 / 60)}
+              분 안에 도착!
+            </>
+          ) : (
+            <>
+              장애인 주차 공간 평균 대비 {focusPlace?.avg_bigger_percentage}%{' '}
+              {focusPlace?.avg_bigger_percentage > 0 ? '↑' : '↓'}
+            </>
+          )}
+        </DistanceText>
+        <InfoText>주차장 이름: {focusPlace?.parkinglot_name}</InfoText>
+        <InfoText>주차장 종류: {focusPlace?.classification}</InfoText>
+        <InfoText>
+          사용 가능 요일: {focusPlace?.operating_days.split('+').join(', ')}
+        </InfoText>
+        <InfoText>
+          주차 가능 대수:{' '}
+          {Math.floor(focusPlace?.parking_compartments_cnt * 0.04)}
+        </InfoText>
+      </>
+    );
+  }
+  return null;
+};
 
 export default () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 760);
@@ -17,6 +52,7 @@ export default () => {
   const [focusPlace, setFocusPlace] = useState<any>(null);
 
   const [placeCount, setPlaceCount] = useState<number>(0);
+  const [placeData, setPlaceData] = useState([]);
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -76,16 +112,12 @@ export default () => {
                       <SectionTitleText>가장 가까운 곳</SectionTitleText>
                       <SectionSubTitleText>(GPS 기준)</SectionSubTitleText>
                     </SectionTitleWrap>
-                    <Address>청파동3가 청파로 45번길</Address>
-                    <DistanceText>현재 위치에서 2분 안에 도착!</DistanceText>
-                    <Divider />
-
-                    <Address>청파동3가 청파로 45번길</Address>
-                    <DistanceText>
-                      {' '}
-                      장애인 주차 공간 평균 대비 4% ↑
-                    </DistanceText>
-                    {JSON.stringify(focusPlace)}
+                    {placeData.map((item, index) => (
+                      <>
+                        {parkingLotInfo(item)}
+                        {index !== placeCount - 1 && <Divider key={index} />}
+                      </>
+                    ))}
                   </SectionContainer>
                 </SidebarContainer>
               </Sheet.Content>
@@ -124,13 +156,16 @@ export default () => {
               <SectionTitleText>가장 가까운 곳</SectionTitleText>
               <SectionSubTitleText>(GPS 기준)</SectionSubTitleText>
             </SectionTitleWrap>
-            <Address>청파동3가 청파로 45번길</Address>
-            <DistanceText>현재 위치에서 2분 안에 도착!</DistanceText>
-            <Divider />
+            <PlaceListWrap>
+              {placeData.map((item, index) => (
+                <>
+                  {parkingLotInfo(item)}
+                  {index !== placeCount - 1 && <Divider key={index} />}
+                </>
+              ))}
+            </PlaceListWrap>
 
             <Address>청파동3가 청파로 45번길</Address>
-            <DistanceText> 장애인 주차 공간 평균 대비 4% ↑</DistanceText>
-            {JSON.stringify(focusPlace)}
           </SectionContainer>
         </SidebarContainer>
       )}
@@ -138,10 +173,13 @@ export default () => {
         <KakaoMap lat={37.555078} lng={126.970702} height="100vh" level={10}>
           <KakaoMapSearch keyword={searchKeyword} />
           <KakaoMapLoadPlaces
+            placeData={placeData}
             setFocusPlace={setFocusPlace}
             setPlaceCount={setPlaceCount}
             setAddress={setAddress}
+            setPlaceData={setPlaceData}
           />
+          <KakaoMapWebview />
         </KakaoMap>
       </MapContainer>
     </Container>
@@ -161,6 +199,7 @@ const SidebarContainer = styled.div`
   flex-direction: column;
   width: 100%;
   max-width: 382px;
+  max-height: 100vh;
   background-color: white;
   box-shadow: 4px 2px 4px 0 rgba(210, 210, 210, 0.5);
   padding: 48px 50px;
@@ -278,6 +317,7 @@ const Divider = styled.span`
 const SectionContainer = styled.div`
   display: flex;
   flex-direction: column;
+  max-height: 100%;
 `;
 
 const SectionTitleWrap = styled.div`
@@ -305,4 +345,28 @@ const DistanceText = styled.span`
   color: #fd146a;
   font-weight: 500;
   letter-spacing: -0.6px;
+  margin-bottom: 4px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 12px;
+  }
+`;
+const InfoText = styled.p`
+  font-size: 16px;
+  letter-spacing: -0.6px;
+  color: #212121;
+  margin-bottom: 2px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+  }
+`;
+
+const PlaceListWrap = styled.div`
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
 `;

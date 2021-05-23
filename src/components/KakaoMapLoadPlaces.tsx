@@ -24,10 +24,14 @@ const KakaoMapLoadPlaces = ({
   setFocusPlace,
   setPlaceCount,
   setAddress,
+  placeData,
+  setPlaceData,
 }: {
+  placeData: any;
   setFocusPlace: any;
   setPlaceCount: any;
   setAddress: any;
+  setPlaceData: any;
 }) => {
   const map: any = useContext(MapContext);
   const [bounds, setBounds] = useState<IBound>({
@@ -38,7 +42,6 @@ const KakaoMapLoadPlaces = ({
     ctlat: 0,
     ctlng: 0,
   });
-  const [placeData, setPlaceData] = useState([]);
 
   const handleIdle = useCallback(() => {
     const bounds = map.getBounds();
